@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: rdp-server
+    env: docker
+    region: oregon
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    envVars:
+      - key: RDP_USER
+        value: rdpuser
+      - key: RDP_PASSWORD
+        generateValue: true
+    disk:
+      name: rdp-data
+      mountPath: /home/rdpuser
+      sizeGB: 1
+    healthCheckPath: /

@@ -1,0 +1,13 @@
+# Environment files
+.env
+
+# Credentials
+*.rdp
+credentials.txt
+
+# Docker
+*.log
+
+# OS
+.DS_Store
+Thumbs.db

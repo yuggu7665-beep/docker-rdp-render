@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  rdp:
+    build:
+      context: .
+      args:
+        RDP_USER: ${RDP_USER:-rdpuser}
+        RDP_PASSWORD: ${RDP_PASSWORD:-ChangeMe123!}
+    container_name: rdp-server
+    ports:
+      - "3389:3389"
+    environment:
+      - RDP_USER=${RDP_USER:-rdpuser}
+      - RDP_PASSWORD=${RDP_PASSWORD:-ChangeMe123!}
+    restart: unless-stopped
+    shm_size: '2gb'
+    volumes:
+      - rdp-data:/home/${RDP_USER:-rdpuser}
+    healthcheck:
+      test: ["CMD", "netstat", "-an", "|", "grep", "3389"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+volumes:
+  rdp-data:
+    driver: local

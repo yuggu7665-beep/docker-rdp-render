@@ -19,6 +19,8 @@ RUN apt-get update && apt-get install -y \
     net-tools \
     dbus-x11 \
     xorgxrdp \
+    python3 \
+    python3-pip \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
@@ -49,8 +51,8 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY start.sh /start.sh
 RUN chmod +x /start.sh
 
-# Expose RDP port
-EXPOSE 3389
+# Expose RDP port and HTTP port for health checks
+EXPOSE 3389 8000
 
 # Health check
 HEALTHCHECK --interval=30s --timeout=10s --start-period=40s --retries=3 \
